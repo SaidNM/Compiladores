@@ -1,0 +1,34 @@
+notas rpcacl:
+padre
+  |
+  v
+exp: exp exp '+' { $$ = $1 + $2;}
+$1 -> valor que tomara primer exp
+$2 -> valor que tomara segundo exp
+$$ -> valor que tomara el Padre
+
+Se forma el arbol desde los hijos hasta el padre. 
+UP
+^
+|
+Bottom
+
+
+yylval -> variable en la cual se guardan todos lo token obtenidos, es el puente oara comunicar flex con bison.
+Utilizamos 
+bison rpcalc.y -d  -> para generar la tabla de las constantes de bison que se añadira al archivo flex (solo se incluye el .h)
+
+--------
+Compilamos el archivo rpcalc.l ->
+flex rpcalc.l
+gcc -c lex.yy,c
+
+Compilamos el archivo rpcalc.y
+bison rpcalc.y -d
+gcc -c rpcalc.c 
+
+-----Ambos archivos pasados nos generan un archivo .o
+
+Ligamos ambos archivos .o 
+
+gcc lex.yy.o rpcalc.tab.o -lm -ll     ---Se añadiron las bibliotecas math.h y la de flex
